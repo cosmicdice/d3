@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/main.css">
+        <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+    <svg width="800" height="200">
+            <g stroke="lightgray"> </g>
+    </svg>
+        <script type="text/javascript">
+            var amount = 100;
+            var dataset;
+            var yPos = 100;
+            var getXPos = function(d, i) {
+                    return i/amount*90+5 + "%";
+                };
+            var dataset = d3.range(amount)
+                .map(function() { return 40; });
+                var circles = d3.select("svg").select("g").selectAll("circle").data(dataset);
+                circles.enter().append("circle")
+                .attr("cx", getXPos).attr("cy", yPos)
+                .attr("r", 10)
+                .attr("fill", function(d, i) {
+                    return (i%2==1) ? "darkblue" : "darkred";
+                });
+            var update = function(t) {
+                d3.selectAll("circle")
+                .attr("cy", function(d, i){
+                    s = Math.sin((t/400)*i/amount);
+                    return yPos - s*80 ;
+                });              
+            }
+            d3.timer(update);
+        </script>
+    </body>
+</html>
